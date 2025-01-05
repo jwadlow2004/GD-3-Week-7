@@ -19,7 +19,7 @@ namespace GameDevWithMarco.Managers
             Time.timeScale = 0;
 
             yield return new WaitForSeconds(duration);  
-
+            //test
             Time.timeScale = 1;
         }
     }
