@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameDevWithMarco.Singleton;
 using UnityEngine.SocialPlatforms.Impl;
+using GameDevWithMarco.Data;
 
 namespace GameDevWithMarco.Managers
 {
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : MonoBehaviour
     {
-        private int score;
+        [SerializeField] GlobalData globalData;
 
-        public int Score
+        private void Start()
         {
-            get
+            if (globalData != null)
             {
-                return score;
+                globalData.ResetsScore();
+                globalData.SetTheScoreRequiredToWin();
             }
+            else
+            {
+                Debug.LogWarning("GlobalData not asigned to GM");
+            }
+            
         }
 
-
-        public void AddToScore(int numberToAdd)
+        public void GameWon()
         {
-            score += numberToAdd;
-            Debug.Log($"The current score is {score}");
+            Time.timeScale = 0;
+            Debug.Log("Game Won");
         }
 
     }

@@ -5,6 +5,7 @@ using GameDevWithMarco.RandomStuff;
 using GameDevWithMarco.Managers;
 using GameDevWithMarco.ObserverPattern;
 using GameDevWithMarco.Singleton;
+using GameDevWithMarco.Data;
 
 namespace GameDevWithMarco.Player
 {
@@ -12,15 +13,21 @@ namespace GameDevWithMarco.Player
     {
 
         [SerializeField] GameEvent coinCollected;
-        
+        [SerializeField] GlobalData globalData;
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.tag =="Coin")
             {
                 int coinValue = collision.GetComponent<Coin>().CoinValue;
 
-                GameManager.Instance.AddToScore(coinValue);
-
+                if (globalData != null)
+                {
+                    globalData.AddToScore(coinValue);
+                }
+                else
+                {
+                    Debug.LogWarning("not assined to cointrigger");
+                }
                 Destroy(collision.gameObject);
 
                 coinCollected.Raise();
